@@ -7,29 +7,22 @@
     <title>Document</title>
 </head>
 <body>
-    <h1 style="text-align: center; color: blue">Quiz of Random Things</h1>
+    <h1 style="text-align: center; color: blue">Easy Math Quiz Made With JQuery</h1>
 
     <div class="question-container">
             <div id="question"></div>
             
-            <div class="answer">
-                <input type="radio" name="answer" id="answer1">
-                <label for="answer1" id="answerLabel1"></label>
-            </div>
-            <div class="answer">
-                <input type="radio" name="answer" id="answer2">
-                <label for="answer1" id="answerLabel2"></label>
-            </div>  
-            <div class="answer correct">
-                <input type="radio" name="answer" id="answer3">
-                <label for="answer1" id="answerLabel3"></label>
-            </div>
-           
+            <button class="answer" id="answer1"></button>
+
+            <button class="answer" id="answer2"></button>
+
+            <button class="answer" id="answer3"></button>
 
             <div class="choice"></div>
+            <br>
 
         <div class="buttons">
-            <button class="button check">Check Answer</button>
+            <button class="button check" disabled>Confirm and Check Answer</button>
             <button class="button next" disabled>Next Question</button>
         </div>
         

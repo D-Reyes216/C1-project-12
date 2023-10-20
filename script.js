@@ -1,22 +1,4 @@
-// function reset() {
-//     questionList.currentIndex.classList.remove('.active')
-// }
-
-const ques = document.getElementById('question')
-
-//gets labels to edit answer text
-// const ans1Text = document.getElementById('answerLabel1');
-// const ans2Text = document.getElementById('answerLabel2');
-// const ans3Text = document.getElementById('answerLabel3');
-
-//gets radio elements to read user input
-const ans1 = document.getElementById('answer1');
-const ans2 = document.getElementById('answer2');
-const ans3 = document.getElementById('answer3');
-
-const checkAnsButton = document.querySelector('button.check');
-const nextButton = document.querySelector('button.next');
-
+//questions
 const question1 = {
     question: "What is 1 + 1?",
     answer1: "4",
@@ -43,25 +25,102 @@ const question3 = {
 
 let questionList = [question1, question2, question3];
 currIndex = 0;
+let numCorrect = 0;
+
+//selects and deselects choices based on user input
+$('#answer1').on('click', function() {
+    resetAnswers();
+    $('#answer1').addClass('selected');
+    $('button.check').removeAttr('disabled');   
+})
+
+$('#answer2').on('click', function() {
+    resetAnswers();
+    $('#answer2').addClass('selected');
+    $('button.check').removeAttr('disabled'); 
+})
+
+$('#answer3').on('click', function() {
+    resetAnswers();
+    $('#answer3').addClass('selected');
+    $('button.check').removeAttr('disabled');
+})
+
+//button event listeners
+$('button.check').on('click', checkAnswer)
+$('button.next').on('click', nextQuestion)
 
 function checkAnswer() {
+    $('button.answer').attr('disabled', true);
 
+    if($('button.selected').text() == questionList[currIndex].correct){
+        $('div.choice')
+            .css('background-color', 'rgb(30, 255, 105)')
+            .text('Correct!')
+        numCorrect ++;
+    } else {
+        $('div.choice').text('Incorrect')
+            .css('background-color', 'red')
+            .text('Incorrect')
+    }
+
+    $('button.next').removeAttr('disabled');
+
+    if(currIndex >= questionList.length - 1){
+        //when last question is answered, shows total correct answers changes text to ask if user wishes to try again
+        $('button.check').text('Total Correct Answers: ' + numCorrect)  
+        $('button.next').text('Play Again?')
+    }
 }
 
-function nextQuestion() {
+//update text for question and answers
+function updateQuestions() {
+    $("#question").text(questionList[currIndex].question);
+    $("#answer1").text(questionList[currIndex].answer1);
+    $("#answer2").text(questionList[currIndex].answer2);
+    $("#answer3").text(questionList[currIndex].answer3);
+}
+
+updateQuestions();
+
+function resetAnswers() {
+    $('button.answer').removeClass('selected'); 
+   
+    $('div.choice')
+        .css('background-color', '')
+        .text('')
+
+    $('button.answer').removeAttr('disabled');
+}
+
+//update question + answer text
+function nextQuestion() { 
     currIndex ++;
-    let currQuestion = questionList[currIndex];
+    updateQuestions()
+    resetAnswers();
 
-    $("#question").text(currQuestion.question);
-    $("#answerLabel1").text(currQuestion.answer1);
-    $("#answerLabel2").text(currQuestion.answer2);
-    $("#answerLabel3").text(currQuestion.answer3);
+    $('button.next').attr('disabled', true);
+ 
+    if(currIndex == questionList.length - 1){
+        //changes event listener to reset quiz on click when on last question
+        $('button.next').text('Final Question').off('click')
+        $('button.next').on('click', resetQuiz)
+    }
 }
 
-checkAnsButton.addEventListener('click', checkAnswer)
-nextButton.addEventListener('click', nextQuestion)
-
-$("#question").text(question1.question);
-$("#answerLabel1").text(question1.answer1);
-$("#answerLabel2").text(question1.answer2);
-$("#answerLabel3").text(question1.answer3);
+function resetQuiz() {
+    currIndex = 0;
+    numCorrect = 0;
+    resetAnswers();
+    updateQuestions();
+    
+    //changes event listener back to update to next question when resetting quiz
+    $('button.next').text('Final Question').off('click')
+    $('button.next').on('click', nextQuestion)
+    
+    //resets buttons to original text and disabled status
+    $('button.check').text('Confirm and Check Answer');
+    $('button.next').text('Next Question');
+    $('button.check').attr('disabled', true);
+    $('button.next').attr('disabled', true);
+}

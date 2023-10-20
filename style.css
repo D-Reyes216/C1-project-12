@@ -37,13 +37,21 @@ body {
     color: white;
 }
 
+.selected {
+    background-color:white;
+    border-color: aqua;
+}
+
 .choice {
-    height: 2.2rem;
+    height: 1.6rem;
+    margin: auto;
+    padding-top: 6px;
+    border-radius: 6px;
+    width: 50%;
 }
 
 .button {
     position: relative;
-    /* top: 35%; */
     border: 3px solid #fff;
     border-radius: 12px;
     width: 15rem;
