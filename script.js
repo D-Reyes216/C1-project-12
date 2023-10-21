@@ -28,22 +28,10 @@ currIndex = 0;
 let numCorrect = 0;
 
 //selects and deselects choices based on user input
-$('#answer1').on('click', function() {
+$('.answer').on('click', function() {
     resetAnswers();
-    $('#answer1').addClass('selected');
+    $(this).addClass('selected');
     $('button.check').removeAttr('disabled');   
-})
-
-$('#answer2').on('click', function() {
-    resetAnswers();
-    $('#answer2').addClass('selected');
-    $('button.check').removeAttr('disabled'); 
-})
-
-$('#answer3').on('click', function() {
-    resetAnswers();
-    $('#answer3').addClass('selected');
-    $('button.check').removeAttr('disabled');
 })
 
 //button event listeners
@@ -102,9 +90,11 @@ function nextQuestion() {
     $('button.next').attr('disabled', true);
  
     if(currIndex == questionList.length - 1){
-        //changes event listener to reset quiz on click when on last question
-        $('button.next').text('Final Question').off('click')
-        $('button.next').on('click', resetQuiz)
+        //changes event listener to let user reset quiz on click when on last question
+        $('button.next')
+            .text('Final Question')
+            .off('click')
+            .on('click', resetQuiz)
     }
 }
 
@@ -115,12 +105,16 @@ function resetQuiz() {
     updateQuestions();
     
     //changes event listener back to update to next question when resetting quiz
-    $('button.next').text('Final Question').off('click')
-    $('button.next').on('click', nextQuestion)
+    $('button.next')
+        .text('Final Question')
+        .off('click')
+        .on('click', nextQuestion)
     
     //resets buttons to original text and disabled status
-    $('button.check').text('Confirm and Check Answer');
-    $('button.next').text('Next Question');
-    $('button.check').attr('disabled', true);
-    $('button.next').attr('disabled', true);
+    $('button.check')
+        .text('Confirm and Check Answer')
+        .attr('disabled', true);;
+    $('button.next')
+        .text('Next Question')
+        .attr('disabled', true);
 }

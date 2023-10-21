@@ -63,7 +63,7 @@ body {
     transition: all 200ms ease-in-out;
   }
 
-  .button:disabled {
+  .button:disabled, button.answer:disabled {
     background-color: rgb(167, 151, 151);
     color: gray;
     cursor: not-allowed;
