@@ -44,12 +44,12 @@ function checkAnswer() {
     if($('button.selected').text() == questionList[currIndex].correct){
         $('div.choice')
             .css('background-color', 'rgb(30, 255, 105)')
-            .text('Correct!')
+            .text('Good job! The correct answer is ' + questionList[currIndex].correct)
         numCorrect ++;
     } else {
         $('div.choice').text('Incorrect')
             .css('background-color', 'red')
-            .text('Incorrect')
+            .text($('button.selected').text() + ' is incorrect.')
     }
 
     $('button.next').removeAttr('disabled');
